@@ -5,8 +5,8 @@
 ===
   * Python version: 2.7.9
   * Author: Guo Zhang
-  * Date: 2016-4-21
-  * Module version: 2.0
+  * Date: 2016-4-23
+  * Module version: 2.1
   * Descrption: This is a JD scarper for China's Prices Project
 
 ---
@@ -15,6 +15,7 @@
 ===
   * jdScraper.py (Main function)
     * scraperThreadPool (a thread pool for a scraper)
+      * catPara.py (deal with parameters to the scraper function)
     * jdCategoryScraper.py (a category scraper)
       * getParameter.py (unparse parameters for a URL)
       * createFile.py (create a file name for a page)
@@ -24,6 +25,7 @@
       * parseHTMl.py (parse the HTML)
         * writeData.py (write datas into files or databases)
       * ipProxiesList, proxiesList (IP proxies pool)
+    * jdCategories.py (the categories required to be scrapered)
   * proxiesPool
     * getIP_xici.py (get IP proxies from xicidaili)-> proxiesList
     * ipChecker.py (check IP proxies)-> ipProxiesList
