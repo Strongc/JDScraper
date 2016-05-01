@@ -14,7 +14,7 @@ import csv
 
 #----------function definition----------
 
-def createFile(presentDay,categoryName,parameters,pageNum):
+def createFile(presentDay,presentTime,categoryName,parameters,pageNum):
     'Create file and its name for a certain page'
     
     # check or create a daily dictionary
@@ -27,14 +27,14 @@ def createFile(presentDay,categoryName,parameters,pageNum):
         
     # create a file and its name for a certain page
     if parameters:
-        fileName = ''.join([dictionaryName,'/','jdPrice','_',presentDay,'_',categoryName,'_',parameters,'_',str(pageNum)])
+        fileName = ''.join([dictionaryName,'/','jdPrice','_',presentDay,'_',presentTime,'_',categoryName,'_',parameters,'_',str(pageNum)])
     else:
-        fileName = ''.join([dictionaryName,'/','jdPrice','_',presentDay,'_',categoryName,'_',str(pageNum)])
+        fileName = ''.join([dictionaryName,'/','jdPrice','_',presentDay,'_',presentTime,'_',categoryName,'_',str(pageNum)])
     
     # write the first line
     with codecs.open(fileName,'wb',) as f:
         writer = csv.writer(f)
-        writer.writerow(('presentDay','presentTime','goodsURL','goodsName','ID','price','commentsNum'))
+        writer.writerow(('goodsURL','goodsName','ID','price','commentsNum'))
   
     return fileName
 
