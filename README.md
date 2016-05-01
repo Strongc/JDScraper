@@ -42,8 +42,8 @@
 ===
   * Version 2.3(2016-4-30)
     * add emailSending.py
-	  * add JD type sh
-	  * add logTime
+    * add JD type sh
+    * add logTime
   * Version 2.2(2016-4-27)
     * rewrite jdCategoryScraper.py
     * add unitTest
