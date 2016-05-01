@@ -16,8 +16,6 @@ import csv
 
 def jdWriteData(product,fileName):
     indicator = 1
-    presentDay = str(time.strftime('%Y-%m-%d',time.localtime(time.time())))
-    presentTime = str(time.strftime('%H:%M:%S',time.localtime(time.time()))) # the time of writing into .csv files
     
     try:
         goodsURL = product.find('div',attrs={'class':'p-name p-name-type-2'}).a['href']
@@ -48,7 +46,7 @@ def jdWriteData(product,fileName):
     try:
         with codecs.open(fileName,'ab') as f:
             writer = csv.writer(f)
-            writer.writerow((presentDay,presentTime,goodsURL,goodsName,id,price,commentsNum))           
+            writer.writerow((goodsURL,goodsName,id,price,commentsNum))           
     except:
         indicator = 0
         
