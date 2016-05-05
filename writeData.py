@@ -18,35 +18,58 @@ def jdWriteData(product,fileName):
     indicator = 1
     
     try:
-        goodsURL = product.find('div',attrs={'class':'p-name p-name-type-2'}).a['href']
-        goodsURL = ''.join(['http:',goodsURL]).encode('utf-8')
+        goodsURLs = []
+        goodsURL_divs = product.find_all('div',attrs={'class':'p-name p-name-type-2'})
+        for goodsURL_div in goodsURL_divs:
+            goodsURL = goodsURL_div.a['href']
+            goodsURL = ''.join(['http:',goodsURL]).encode('utf-8')
+            goodsURLs.append(goodsURL)
+            
     except:
-        goodsURL = None
+        goodsURLs = None
             
     try:
-        goodsName = product.find('div',attrs={'class':'p-name p-name-type-2'}).a.em.get_text().encode('utf-8')
+        goodsNames = []
+        goodsName_divs = product.find_all('div',attrs={'class':'p-name p-name-type-2'})
+        for goodsName_div in goodsName_divs:
+            goodsName = goodsName_div.a.em.get_text().encode('utf-8')
+            goodsNames.append(goodsName) 
     except:
-        goodsName = None
+        goodsNames = None
     
     try:
-        id = product.find('div',attrs={'class':'p-price'}).strong['class'].encode('utf-8')
+        ids = []
+        id_divs = product.find_all('div',attrs={'class':'p-price'})
+        for id_div in id_divs:
+            id = id_div.strong['class'][0]
+            id = id.encode('utf-8')
+            ids.append(id)
     except:
-        id = None
+        ids = None
+        
+    try: 
+        prices = []
+        price_divs = product.find_all('div',attrs={'class':'p-price'})
+        for price_div in price_divs:
+            price = price_div.strong.i.get_text().encode('utf-8')
+            prices.append(price)
+    except:
+        prices = None
         
     try:
-        price = product.find('div',attrs={'class':'p-price'}).strong['data-price'].encode('utf-8')
+        commentsNums = []
+        commentsNum_divs = product.find('div',attrs={'class':'p-commit'})
+        for commentsNum_div in commentsNum_divs:
+            commentsNum = commentsNum_div.a.get_text().encode('utf-8')
+            commentsNums.append(commentsNum)
     except:
-        price = None
+        commentsNums = None
         
     try:
-        commentsNum = product.find('div',attrs={'class':'p-commit'}).strong.a.get_text().encode('utf-8')
-    except:
-        commentsNum = None
-        
-    try:
-        with codecs.open(fileName,'ab') as f:
-            writer = csv.writer(f)
-            writer.writerow((goodsURL,goodsName,id,price,commentsNum))           
+        for goodsURL,goodsName,id,price,commentsNum in zip(goodsURLs,goodsNames,ids,prices,commentsNums):
+            with codecs.open(fileName,'ab') as f:
+                writer = csv.writer(f)
+                writer.writerow((goodsURL,goodsName,id,price,commentsNum))           
     except:
         indicator = 0
         

@@ -91,7 +91,6 @@ class PageScraper(object):
             self.parsePageHTML(self.html,fileName)
             self.parsePageHTML2(self.html2,fileName)
         except:
-            
             return None
         
     def parsePageHTML(self,html,fileName):
@@ -129,16 +128,10 @@ class PageScraper(object):
         products = ul.find_all('li')
         for product in products:
     
-            items = product.find_all('div',attrs={'class':'tab-content-item'})
-            if items:
-                for item in items:
-                    indicator = jdWriteData(item,fileName)
-                    if indicator == 0:
-                        __i__ = 0  
-            else:
-                indicator = jdWriteData(product,fileName)
-                if indicator == 0:
-                    __i__ = 0
+            items = product.find('div',attrs={'class':'gl-i-tab-content'})
+            indicator = jdWriteData(product,fileName)
+            if indicator == 0:
+                __i__ = 0
              
         # print write error
         if __i__ == 0:        
@@ -174,9 +167,10 @@ def jdCategoryScraper(categoryName,**urlParameter):
 if __name__ == '__main__':
     
     begin=time.time()
-    
-    categoryName = u'酱油'
-    urlParameter = {'cid2':'1584','cid3':'2677','ev':''}  
+    categoryName = '五香粉'
+    urlParameter = {'cid2':'1477'}
+    #categoryName = u'酱油'
+    #urlParameter = {'cid2':'1584','cid3':'2677','ev':''}  
     jdCategoryScraper(categoryName,**urlParameter)
     
     end = time.time()

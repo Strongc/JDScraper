@@ -4,10 +4,10 @@
 ## Package Document
 ===
   * Project name: JD Scraper
-  * Project version: 2.3
+  * Project version: 2.4
   * Author: Guo Zhang
   * Contributor: Xingjian Lin
-  * Date: 2016-05-01
+  * Date: 2016-05-05
   * Python version: 2.7.9
   * Descrption: This is a JD scarper for China's Prices Project
 
@@ -40,10 +40,12 @@
     
 ## CHANGELOG
 ===
+  * Version 2.4(2016-5-5)
+    * rewrite PageScraper.parseHTML of jdCategoryScraper.py and writeData.py
   * Version 2.3(2016-4-30)
     * add emailSending.py
-    * add JD type sh
-    * add logTime
+	  * add JD type sh
+	  * add logTime
   * Version 2.2(2016-4-27)
     * rewrite jdCategoryScraper.py
     * add unitTest
