@@ -34,7 +34,7 @@ def createFile(presentDay,presentTime,categoryName,parameters,pageNum):
     # write the first line
     with codecs.open(fileName,'wb',) as f:
         writer = csv.writer(f)
-        writer.writerow(('goodsURL','goodsName','ID','price','commentsNum'))
+        writer.writerow(('goodsURL','goodsName','ID','price','commentsNum','addedPrice'))
   
     return fileName
 

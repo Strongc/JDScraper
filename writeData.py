@@ -9,6 +9,8 @@ import time
 import codecs
 import csv
 
+from getPrice import getPrice
+
 #----------module import---------
 
 
@@ -35,8 +37,17 @@ def jdWriteData(product,fileName):
         
     try:
         price = product.find('div',attrs={'class':'p-price'}).i.get_text().encode('utf-8')
+        addedPrice = None
+        if not price:
+            price = getPrice(id)
+            addedPrice = '1'
     except:
         price = None
+        addedPrice = '0'
+            
+    # if addedPrice = None: it is normal
+    # elif addedPrice = '1': it is a binding goods of last goods
+    # elif addedPrice = '0': there is no price infromation
         
     try:
         commentsNum = product.find('div',attrs={'class':'p-commit'}).strong.a.get_text().encode('utf-8')
@@ -46,7 +57,7 @@ def jdWriteData(product,fileName):
     #try:
     with codecs.open(fileName,'ab') as f:
         writer = csv.writer(f)
-        writer.writerow((goodsURL,goodsName,id,price,commentsNum))  
+        writer.writerow((goodsURL,goodsName,id,price,commentsNum,addedPrice))  
     
     #except:
         #indicator = 0
