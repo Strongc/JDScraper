@@ -86,11 +86,13 @@ class PageScraper(object):
             return None
          
     def parseHTML(self):
-        try:
-            fileName = createFile(self.presentDay,self.presentTime,self.categoryName,self.parameters,self.pageNum) 
-            self.parsePageHTML(self.html,fileName)
-            self.parsePageHTML2(self.html2,fileName)
-        except:
+
+        fileName = createFile(self.presentDay,self.presentTime,self.categoryName,self.parameters,self.pageNum) 
+        returnNum1 = self.parsePageHTML(self.html,fileName)
+        returnNum2 = self.parsePageHTML2(self.html2,fileName)
+
+        if not(returnNum1 or returnNum2):
+            print(self.logTime,'parse error',(fileName).encode('utf-8'))
             return None
         
     def parsePageHTML(self,html,fileName):
@@ -108,8 +110,8 @@ class PageScraper(object):
             div_J_goodsList = div_ml_wrap.find('div',attrs={'id':'J_goodsList'})
             ul = div_J_goodsList.ul
             self.parsePageHTML2(ul,fileName)
+            return 1
         except Exception:
-            print(self.logTime,'parse error',(fileName).encode('utf-8'))
             return None  
 
     def parsePageHTML2(self,ul,fileName):
@@ -127,15 +129,27 @@ class PageScraper(object):
         __i__ = 1
         products = ul.find_all('li')
         for product in products:
-    
-            items = product.find('div',attrs={'class':'gl-i-tab-content'})
-            indicator = jdWriteData(product,fileName)
-            if indicator == 0:
-                __i__ = 0
+            try:
+                items = product.find_all('div',attrs={'class':'tab-content-item'})
+            except:
+                items = None
+                
+            if items:
+                for item in items:
+                    indicator = jdWriteData(item,fileName)
+                    if indicator == 0:
+                        __i__ = 0  
+            else:
+                indicator = jdWriteData(product,fileName)
+                if indicator == 0:
+                    __i__ = 0
              
         # print write error
         if __i__ == 0:        
             print(self.logTime,'write error:',fileName.encode('utf-8'))
+            return None
+        
+        return 1
 
 #----------class definition----------
 
@@ -167,11 +181,11 @@ def jdCategoryScraper(categoryName,**urlParameter):
 if __name__ == '__main__':
     
     begin=time.time()
-    categoryName = '五香粉'
-    urlParameter = {'cid2':'1477'}
-    #categoryName = u'酱油'
-    #urlParameter = {'cid2':'1584','cid3':'2677','ev':''}  
-    jdCategoryScraper(categoryName,**urlParameter)
+    
+    categoryName = u'酱油'
+    urlParameter = {'cid2':'1584','cid3':'2677','ev':''}  
+    jdPageScraper(categoryName, pageNum=1,**urlParameter)
+    #jdCategoryScraper(categoryName,**urlParameter)
     
     end = time.time()
     print('time:',end-begin)
