@@ -12,7 +12,7 @@ __author__ = 'Guo Zhang'
 
 __date__ = '2016-4-19'
 
-__moduleVersion__ = '6.2'
+__moduleVersion__ = '6.3'
 
 __doc__ = '''
 This is a tmall category scarper,
@@ -58,6 +58,8 @@ class PageScraper(object):
         
         self.presentDay = str(time.strftime('%Y-%m-%d',time.localtime(time.time())))
         self.presentTime = str(time.strftime('%H-%M-%S',time.localtime(time.time())))
+        self.logTime = '[{} {}]'.format(self.presentDay,str(time.strftime('%H:%M:%S',time.localtime(time.time()))))
+
         self.categoryName = categoryName
         self.pageNum = pageNum
         self.parameters = getParameter(**urlParameter)
@@ -79,7 +81,7 @@ class PageScraper(object):
             pageNumber = p_ui.find('b',attrs={'class':'ui-page-s-len'}).getText().split('/')[1]
             return int(pageNumber)                                  
         except Exception:
-            print(self.presentTime,',fail to get page number:',(self.pageURL).encode('utf-8'))
+            print(self.logTime,',fail to get page number:',(self.pageURL).encode('utf-8'))
             return None
     
     def parsePageHTML(self):
@@ -96,14 +98,19 @@ class PageScraper(object):
             div_content = soup.body.find('div',attrs={'class':'page'}).find('div',attrs={'class':'content'})
             products = soup.find_all('div',attrs={'class':'product-iWrap'})
             if products == None:
-                print(self.presentTime,',parse error:',(fileName).encode('utf-8'))
+                print(self.logTime,',parse error:',(fileName).encode('utf-8'))
                 return None
         except Exception:
-            print(self.presentTime,',parse error:',(fileName).encode('utf-8'))
+            print(self.logTime,',parse error:',(fileName).encode('utf-8'))
         
         # parse the data
         __i__ = 1
         for product in products:
+            
+            try:
+                goodsID = product.find('p',attrs = {'class':'productStatus'}).find_all('span')[-1]['data-item']
+            except:
+                goodsID = None
            
             try:
                 goodsURL = product.find('div',attrs={'class':'productImg-wrap'}).find('a')['href']
@@ -167,13 +174,13 @@ class PageScraper(object):
             try:
                 with codecs.open(fileName,'ab') as f:
                     writer = csv.writer(f)
-                    writer.writerow((goodsURL,goodsName,shopURL,shopName,price,price_ave,monthly_sales,comments))
+                    writer.writerow((goodsID,goodsURL,goodsName,shopURL,shopName,price,price_ave,monthly_sales,comments))
             except:
                 __i__ = 0
         
         # print write error
         if __i__ == 0:        
-            print(self.presentTime,',write error:',(fileName).encode('utf-8'))
+            print(self.logTime,',write error:',(fileName).encode('utf-8'))
 
 #----------class definition----------
 
@@ -214,7 +221,7 @@ if  __name__ == '__main__':
     print('-'*40)
     begin = time.time()
     #categoryName = u'笔记本电脑'
-    #catNum = u'50024399'
+    #urlParameter = {'cat':'50024399'}
     categoryName = u'酱油' #u'%BD%B4%D3%CD'
     urlParameter = {'cat':u'50099300'}
     #tmallPageScraper(categoryName,**urlParameter)
