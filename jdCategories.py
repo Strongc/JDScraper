@@ -3,7 +3,7 @@
 from __future__ import print_function,unicode_literals
 
 
-CATEGORIES_NAME =[
+CATEGORIES =[
 #食品-调味品-盐
 [u'食用盐',{'cid3':'2677'}],#粮油调味-调味品,#杂质多
 #食品-调味品-酱油
