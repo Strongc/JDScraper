@@ -4,9 +4,9 @@
 ## Package Document
 ===
   * Project name: JD Scraper
-  * Project version: 3.0
+  * Project version: 3.0.2
   * Author: Guo Zhang
-  * Contributer: Xingjian Lin,Lin Chen
+  * Contributer: Xingjian Lin,Xi Huang, Lin Chen
   * Date: 2016-6-30
   * Python version: 2.7.9
   * Descrption: This is a JD scarper for China's Prices Project
