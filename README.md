@@ -6,7 +6,7 @@
   * Project name: JD Scraper
   * Project version: 3.0.2
   * Author: Guo Zhang
-  * Contributer: Xingjian Lin,Xi Huang, Lin Chen
+  * Contributer: Xingjian Lin, Xi Huang, Lin Chen
   * Date: 2016-6-30
   * Python version: 2.7.9
   * Descrption: This is a JD scarper for China's Prices Project
@@ -16,14 +16,21 @@
 ## Package Structure
 ===
  * main.py (main function)
-  * TmallPageScraper.py (a page scraper for Tmall)
+  * JDPageScraper.py (a page scraper for JD)
     * dataCleaning.py (clean source data)
   * geventQueue.py (a gevent queue for Tmall and JD scrapers)
-  * TmallCategories.py (the category list for Tmall)
+  * JDCategories.py (the category list for Tmall)
   
   * decorator.py (decorators)
+  
+ * serverManager(manager scraper on the server)
+  * emailSending.py (send daily data and log with emails)
+  * jdscraper.sh (run the scraper)
+  * jdrar.sh (zip data)
+  * jdemail.sh (send daily emails)
+  * crontab.md (guidance for make timing process)
 
-* proxiesPool
+ * proxiesPool
   * headers.py (user-agents and proxies for request headers) 
   * checkedProxies & proxies (IP proxies pool)
 
@@ -40,6 +47,10 @@
     
 ## CHANGELOG
 ===
+  * Version 3.1.1(2016-7-24)
+    * modify bugs
+  * Version 3.1(2016-7-24)
+    * add serverManage
   * Version 3.0.2(2016-7-3)
     * modify bugs
   * Version 3.0.1(2016-7-1)

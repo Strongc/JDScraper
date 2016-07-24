@@ -67,5 +67,6 @@ def main():
 
 if __name__ == '__main__':    
     main()
+    print('Web scraping is over')
 
 #----------main function----------
